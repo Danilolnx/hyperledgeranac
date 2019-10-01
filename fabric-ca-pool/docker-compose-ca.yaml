@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+  ca.ORG_FULL_NAME:
+    container_name: ca.ORG_FULL_NAME
+    image: hyperledger/fabric-ca:IMAGE_VERSION
+    environment:
+      - FABRIC_CA_SERVER_CA_NAME=ca.ORG_FULL_NAME
+      - ORG_DOMAIN=ORG_FULL_NAME
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_TLS_ENABLED=TRUE
+    volumes:
+      - ./fabric-ca-server-template.yaml:/etc/hyperledger/fabric-ca-server/fabric-ca-server-template.yaml
+      - ./scripts:/etc/hyperledger/fabric-ca-server/scripts
+    ports:
+      - "7054:7054"
+    working_dir: /etc/hyperledger/fabric-ca-server
+    command: bash scripts/initca.sh
